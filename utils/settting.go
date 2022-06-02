@@ -37,8 +37,9 @@ func LoadServer(file *ini.File) {
 // LoadData 数据库参数
 func LoadData(file *ini.File) {
 	section := "database"
-	Db = file.Section(section).Key("Db").MustString("localhost")
-	DbHost = file.Section(section).Key("DbHost").MustString(":3306")
+	Db = file.Section(section).Key("Db").MustString("mysql")
+	DbHost = file.Section(section).Key("DbHost").MustString("localhost")
+	DbPort = file.Section(section).Key("DbPort").MustString(":3306")
 	DbUser = file.Section(section).Key("DbUser").MustString("")
 	DbPassWord = file.Section(section).Key("DbPassWord").MustString("")
 	DbName = file.Section(section).Key("DbName").MustString("")

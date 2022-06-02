@@ -1,0 +1,3 @@
+FROM redis:5.0
+
+MAINTAINER "l6l6ng"
