@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	v1 "github.com/l6l6ng/go-web2/api/v1"
 	"github.com/l6l6ng/go-web2/utils"
-	"net/http"
 )
 
 func InitRoute() {
@@ -11,13 +11,17 @@ func InitRoute() {
 
 	routes := gin.Default()
 
-	routes.Group("api/v1")
+	routers := routes.Group("api/v1")
 	{
-		routes.GET("hello", func(context *gin.Context) {
-			context.AsciiJSON(http.StatusOK, gin.H{
-				"msg": "hello",
-			})
-		})
+		//用户模块
+		routes.POST("user/add", v1.AddUser)
+		routers.GET("users", v1.GetUsers)
+		routers.PUT("user/:id", v1.EditUser)
+		routers.DELETE("user/:id", v1.DeleteUser)
+
+		//分类模块
+
+		//文章模块
 	}
 	routes.Run(utils.HttpPort)
 }
