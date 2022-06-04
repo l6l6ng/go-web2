@@ -14,7 +14,7 @@ func InitRoute() {
 	routers := routes.Group("api/v1")
 	{
 		//用户模块
-		routes.POST("user/add", v1.AddUser)
+		routers.POST("user/add", v1.AddUser)
 		routers.GET("users", v1.GetUsers)
 		routers.PUT("user/:id", v1.EditUser)
 		routers.DELETE("user/:id", v1.DeleteUser)

@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+
+
 var db *gorm.DB
 var err error
 
@@ -34,7 +36,7 @@ func InitDb() {
 		os.Exit(0)
 	}
 
-	db.AutoMigrate(&User{}, &Category{}, &Article{})
+	//db.AutoMigrate(&User{}, &Category{}, &Article{})
 
 	// 获取通用数据库对象 sql.DB ，然后使用其提供的功能
 	sqlDB, err := db.DB()
@@ -50,4 +52,20 @@ func InitDb() {
 
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(10 * time.Second)
+}
+
+// BaseModel 模型基类
+type BaseModel struct {
+	ID uint64 `gorm:"column:id;primaryKey;autoIncrement;" json:"id,omitempty"`
+}
+
+// CommonTimestampsField 时间戳
+type CommonTimestampsField struct {
+	CreatedAt time.Time `gorm:"column:created_at;" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"column:updated_at;index;" json:"updated_at,omitempty"`
+}
+
+// CommonSoftDeletesField 软删除
+type CommonSoftDeletesField struct {
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;index" json:"deleted_at,omitempty"`
 }
