@@ -10,8 +10,6 @@ import (
 	"time"
 )
 
-
-
 var db *gorm.DB
 var err error
 
@@ -25,8 +23,7 @@ func InitDb() {
 	)
 
 	//fmt.Println(dsn)
-
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},

@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/l6l6ng/go-web2/utils/errmsg"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -16,7 +17,7 @@ type User struct {
 
 // UserExit 用户是否存在
 func UserExit(userName string) int {
-	var user User
+	user := User{}
 	db.Select("id").Where("user_name = ?", userName).First(&user)
 	if user.ID > 0 {
 		return errmsg.ERROR_USERNAME_USED
@@ -31,4 +32,13 @@ func AddUser(user *User) int {
 		return errmsg.ERROR
 	}
 	return errmsg.SUCCESS
+}
+
+func GetUsers(pageSize, pageNum int) []User {
+	var users []User
+	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil
+	}
+	return users
 }
